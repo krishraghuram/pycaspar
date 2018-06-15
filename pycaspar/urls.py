@@ -13,9 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+from django.conf.urls import url, include
 from django.contrib import admin
-from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
+    # url(r'^convo20/', include('convo20.urls', namespace='convo20')),
+    # The above way is the old method, and was changed in django 2.0
+    # https://github.com/encode/django-rest-framework/issues/5659#issuecomment-366948260
+    url(r'^convo20/', include(('convo20.urls', 'convo20'))),
 ]
+
