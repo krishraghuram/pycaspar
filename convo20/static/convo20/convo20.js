@@ -46,7 +46,6 @@ function goto_next(){
 
 
 
-
 $(document).ready(function(){
 	// console.log("Hello")
 
@@ -84,4 +83,10 @@ $(document).ready(function(){
 	$('#programme').on('input', update_students)
 	$('#branch').on('change', update_students)
 
+	$(document).bind('keydown', 'ctrl+[', function(){
+		play.click();
+	});	
+	$(document).bind('keydown', 'ctrl+]', function(){
+		stop.click();
+	});	
 });
