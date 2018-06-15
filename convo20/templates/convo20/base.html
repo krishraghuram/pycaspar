@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>{% block title %}{% endblock %}</title>
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	{% block css %}{% endblock %}
+	<!-- Javascript -->
+	<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'convo20/django_csrf.js' %}"></script>
+	<script src="{% static 'convo20/convo20.js' %}"></script>
+	{% block js %}{% endblock %}
+<!-- 	<style>
+	.navbar-brand
+	{
+	    position: absolute;
+	    width: 100%;
+	    left: 0;
+	    text-align: center;
+	    margin:0 auto;
+	}
+	.paginate
+	{
+		min-height: 100vh;
+		height: 100vh;
+	}
+	</style> -->
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">	
+	<a class="navbar-brand" href="#">Home</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle Navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarsExample04">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="#">Student</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">Medals</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#">VIP</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+	{% block content %}{% endblock %}
+</body>
+</html>
