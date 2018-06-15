@@ -15,6 +15,11 @@ from convo20.scripts import caspar
 # Renders the main frontend page.
 class IndexView(View):
 	def get(self, request, *args, **kwargs):
+		# Create a Caspar Server object
+		global cs
+		cs = caspar.CasparServer('172.16.101.107', 5250)
+		
+		# Render the index page
 		temp = list(Student.objects.all())
 		all_programmes = set()
 		all_branches = set()
@@ -46,7 +51,6 @@ class PlayView(View):
 		name = student
 		degree = programme + " " + branch
 		# Play the CG
-		cs = caspar.CasparServer('172.16.101.107', 5250)
 		template_name = '20Convo/20CONVO'
 		data = {'Sym1_Name':name, 'Sym1_Degree':degree}
 		(req,res) = cs.cgplay(template_name,data)
@@ -56,7 +60,6 @@ class PlayView(View):
 # Stops running Caspar CG Animation
 class StopView(View):
 	def post(self, request, *args, **kwargs):
-		cs = caspar.CasparServer('172.16.101.107', 5250)
 		(req,res) = cs.cgstop()
 		return HttpResponse(str(req) + "\n\n\n" + str(res))
 		

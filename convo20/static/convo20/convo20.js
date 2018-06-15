@@ -34,7 +34,7 @@ function goto_next(){
 	} 
 	else if(next.length==0)
 	{
-		alert("Last Element Reached!")
+		alert("Last item reached!")
 	}
 	else
 	{
@@ -54,23 +54,31 @@ $(document).ready(function(){
 	stop = $("#stop");
 
 	play.click(function(){
-		// console.log("Play Clicked")
-		data = {
-		'programme' : $("#programme").val(),
-		'branch'    : $("#branch").val(),
-		'student'   : $("#student").val()
+		if(!play.hasClass('disabled')){
+			// console.log("Play Clicked")
+			data = {
+			'programme' : $("#programme").val(),
+			'branch'    : $("#branch").val(),
+			'student'   : $("#student").val()
+			}
+			$.post( play_url, data, function(data, textStatus, jqXHR){
+				console.log(data)
+				play.addClass("disabled")
+				stop.removeClass("disabled")
+			});
 		}
-		$.post( play_url, data, function(data, textStatus, jqXHR){
-			console.log(data)
-		});
 	});
 
 	stop.click(function(){
-		// console.log("Stop Clicked")
-		$.post( stop_url, data, function(data, textStatus, jqXHR){
-			console.log(data)
-			goto_next()
-		});
+		if(!stop.hasClass('disabled')){
+			// console.log("Stop Clicked")
+			$.post( stop_url, data, function(data, textStatus, jqXHR){
+				console.log(data)
+				goto_next()
+				stop.addClass("disabled")
+				play.removeClass("disabled")
+			});
+		}
 	});
 
 	$('#programme').on('input', update_students)
