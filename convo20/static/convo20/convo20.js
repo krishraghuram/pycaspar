@@ -81,7 +81,7 @@ $(document).ready(function(){
 	});
 
 	$('#programme').on('input', update_students)
-	$('#branch').on('change', update_students)
+	$('#branch').on('input', update_students) 
 
 	$(document).bind('keydown', 'ctrl+[', function(){
 		play.click();
