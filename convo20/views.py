@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from convo20.models import Student
 from convo20.scripts import caspar
 # from django.contrib.auth.models import User
@@ -12,8 +13,12 @@ from convo20.scripts import caspar
 
 # Create your views here.
 
-# Renders the main frontend page.
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
+	def get(self, request, *args, **kwargs):
+		return render(request, 'convo20/index.html')
+
+# Renders the student frontend page
+class StudentView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		# Create a Caspar Server object
 		global cs
@@ -30,9 +35,9 @@ class IndexView(View):
 			'all_programmes' : all_programmes,
 			'all_branches' : all_branches,
 		}
-		return render(request, 'convo20/index.html', context)
+		return render(request, 'convo20/student.html', context)
 
-class UpdateView(View):
+class UpdateView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
 		programme 	= request.POST.get('programme')
 		branch 		= request.POST.get('branch')
@@ -41,7 +46,7 @@ class UpdateView(View):
 		return JsonResponse(temp,safe=False)
 
 # Plays Caspar CG Animation
-class PlayView(View):
+class PlayView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
 		# Get POST data
 		programme 	= request.POST.get('programme')
@@ -58,7 +63,7 @@ class PlayView(View):
 
 		
 # Stops running Caspar CG Animation
-class StopView(View):
+class StopView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
 		(req,res) = cs.cgstop()
 		return HttpResponse(str(req) + "\n\n\n" + str(res))

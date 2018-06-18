@@ -38,21 +38,26 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">	
-	<a class="navbar-brand" href="#">Home</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle Navigation">
+	<a class="navbar-brand" href="{% url 'convo20:index' %}">Home</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
-	<div class="collapse navbar-collapse" id="navbarsExample04">
+	<div class="collapse navbar-collapse">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-				<a class="nav-link" href="#">Student</a>
+				<a class="nav-link" href="{% url 'convo20:student' %}">Student</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">Medals</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">VIP</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'logout' %}">Logout</a>
 			</li>
 		</ul>
 	</div>

@@ -5,7 +5,7 @@ var stop;
 
 
 
-function update_students(){
+function update(){
 	// console.log( this.value );
 	data = {
 		'programme' : $("#programme").val(),
@@ -80,8 +80,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$('#programme').on('input', update_students)
-	$('#branch').on('input', update_students) 
+	$('#programme').on('input', update)
+	$('#branch').on('input', update) 
 
 	$(document).bind('keydown', 'ctrl+[', function(){
 		play.click();
