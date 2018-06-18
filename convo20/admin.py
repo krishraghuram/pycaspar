@@ -9,7 +9,7 @@ from .models import Student
 
 class StudentAdmin(ImportExportModelAdmin):
 	resource_class = StudentResource
-	fields = ('rollno', 'name', 'programme', 'branch')
+	fields = ('orderno','rollno', 'name', 'programme', 'branch')
 	list_display = ('pretty_name','rollno')
 
 	#Make rollno readonly on update, but writable during creation

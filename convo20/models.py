@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Student(models.Model):
+	orderno = models.IntegerField(unique=True)
 	rollno = models.IntegerField(unique=True)
 	name = models.CharField(max_length=100)
 	programme = models.CharField(max_length=50)
