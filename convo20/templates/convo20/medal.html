@@ -1,0 +1,88 @@
+<!-- 
+Important ID's
+  programme
+  branch
+  student
+  play
+  stop
+Need to implement JS for buttons - play and stop
+ -->
+
+{% extends "base.html" %}
+
+{% block title %}IITG 20th Convocation{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var play_url   = "{% url 'convo20:play' %}";
+	var stop_url   = "{% url 'convo20:stop' %}";
+	var update_url = "{% url 'convo20:update' %}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="py-5 mt-5 text-center">
+		<h2>Caspar CG Controller</h2>
+	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<!-- <h4 class="mb-3">Please fill the info</h4> -->
+			<form>
+				{% csrf_token %}
+
+				<!-- <div class="row">
+					<div class="col-3 mb-3">
+						<label for="medal">Programme</label>
+						<select class="custom-select mb-3 d-block w-100" id="programme">
+							<option value="None">None</option>
+							# Options will be populated by Django 
+							{% if all_programmes %}
+								{% for i in all_programmes %}
+									<option value="{{ i }}">{{ i }}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<div class="col-3 mb-3">
+						<label for="branch">Branch</label>
+						<select class="custom-select mb-3 d-block w-100" id="branch">
+							<option value="None">None</option>
+							# Options will be populated by Django 
+							{% if all_branches %}
+								{% for i in all_branches %}
+									<option value="{{ i }}">{{ i }}</option>
+								{% endfor %}
+							{% endif %}									
+						</select>
+					</div>
+				</div>-->
+
+				<div class="row">
+					<div class="col-12 mb-3">
+						<label for="medal">Medal</label>
+						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="student" size="10"><!-- change the id  -->
+						<!-- Options will be populated by AJAX -->
+						</select>
+					</div>
+				</div>
+
+				<!-- <hr class="mb-4"> -->
+
+				<div class="row">
+					<div class="col-6 mb-3">
+						<button class="btn btn-success btn-lg btn-block" type="button" id="play">Play</button>
+					</div>
+					<div class="col-6 mb-3">
+						<button class="btn btn-danger btn-lg btn-block disabled" type="button" id="stop">Stop</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
