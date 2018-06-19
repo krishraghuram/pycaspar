@@ -61,8 +61,13 @@ Need to implement JS for buttons - play and stop
 				<div class="row">
 					<div class="col-12 mb-3">
 						<label for="VIP">V.I.P.</label>
-						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="student" size="10"><!-- change the id  -->
-						<!-- Options will be populated by AJAX -->
+						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="VIP" size="10"><!-- changed the id  from student to VIP -->
+						<!-- Options will be populated by Django --> 
+							{% if all_VIPs %}
+								{% for i in all_VIPs %}
+									<option value="{{ i }}">{{ i }}</option>
+								{% endfor %}
+							{% endif %}	
 						</select>
 					</div>
 				</div>

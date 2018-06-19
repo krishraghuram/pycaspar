@@ -19,11 +19,11 @@ class IndexView(LoginRequiredMixin, View):
 
 # Renders the student frontend page
 class StudentView(LoginRequiredMixin, View):
+	# Create a Caspar Server object
+	global cs
+	cs = caspar.CasparServer('172.16.101.107', 5250)
 	def get(self, request, *args, **kwargs):
-		# Create a Caspar Server object
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)
-		
+	
 		# Render the index page
 		temp = list(Student.objects.all())
 		all_programmes  = set()
@@ -41,16 +41,16 @@ class StudentView(LoginRequiredMixin, View):
 class VIP_View(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		# Create a Caspar Server object
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)
+		#global cs
+		#cs = caspar.CasparServer('172.16.101.107', 5250)
 		
 		# Render the index page
 		temp = list(VIP.objects.all())
-		all_designations = set()
+		all_VIPs = set()
 		for i in temp:
-			all_designations.add(i.designation)
+			all_VIPs.add(i.name+", "+i.designation)
 		context = {
-			'all_designations' : all_designations,
+			'all_VIPs' : all_VIPs,
 		}
 		return render(request, 'convo20/VIP.html', context)
 
@@ -59,8 +59,8 @@ class VIP_View(LoginRequiredMixin, View):
 class MedalView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		# Create a Caspar Server object
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)
+		#global cs
+		#cs = caspar.CasparServer('172.16.101.107', 5250)
 		
 		# Render the index page
 		temp = list(Medal.objects.all())
@@ -68,15 +68,14 @@ class MedalView(LoginRequiredMixin, View):
 		for i in temp:
 			all_medals.add(i.name + " " + i.programme + " (" + i.branch + ") ")
 		context = {
-			'all_programmes' : all_programmes,
-			'all_branches' : all_branches,
 			'all_medals' : all_medals,
 		}
 		return render(request, 'convo20/medal.html', context)
 
 
 class UpdateView(LoginRequiredMixin, View):
-	def post_student(self, request, *args, **kwargs):
+	#def post_student(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		programme 	= request.POST.get('programme')
 		branch 		= request.POST.get('branch')
 		temp = list(Student.objects.filter(programme=programme, branch=branch))
@@ -86,7 +85,7 @@ class UpdateView(LoginRequiredMixin, View):
 	#Here no query is needed. also, I have to display name as well as designation in the form.... DO SOMETHING
 	def post_VIP(self, request, *args, **kwargs):
 		temp = list(VIP.objects.all())
-		temp = [ i.name+" "+i.designation for i in temp ]
+		temp = [ i.name+", "+i.designation for i in temp ]
 		return JsonResponse(temp,safe=False)
 
 	#Here no query is needed. also, I have to display name as well as everything else in the form.... DO SOMETHING
@@ -98,7 +97,7 @@ class UpdateView(LoginRequiredMixin, View):
 
 # Plays Caspar CG Animation
 class PlayView(LoginRequiredMixin, View):
-	def post_student(self, request, *args, **kwargs):
+	def post(self, request, *args, **kwargs):
 		# Get POST data
 		programme 	= request.POST.get('programme')
 		branch 		= request.POST.get('branch')
