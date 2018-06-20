@@ -1,11 +1,8 @@
 <!-- 
 Important ID's
-  programme
-  branch
-  student
+  medal
   play
   stop
-Need to implement JS for buttons - play and stop
  -->
 
 {% extends "base.html" %}
@@ -19,8 +16,6 @@ Need to implement JS for buttons - play and stop
 	var play_url   = "{% url 'convo20:play' %}";
 	var stop_url   = "{% url 'convo20:stop' %}";
 </script>
-
-<!---<script src="static/convo20/convo20_medal.js"></script>--->
 {% endblock %}
 
 {% block content %}
@@ -34,49 +29,19 @@ Need to implement JS for buttons - play and stop
 			<!-- <h4 class="mb-3">Please fill the info</h4> -->
 			<form>
 				{% csrf_token %}
-
-				<!-- <div class="row">
-					<div class="col-3 mb-3">
-						<label for="medal">Programme</label>
-						<select class="custom-select mb-3 d-block w-100" id="programme">
-							<option value="None">None</option>
-							# Options will be populated by Django 
-							{% if all_programmes %}
-								{% for i in all_programmes %}
-									<option value="{{ i }}">{{ i }}</option>
-								{% endfor %}
-							{% endif %}
-						</select>
-					</div>
-					<div class="col-3 mb-3">
-						<label for="branch">Branch</label>
-						<select class="custom-select mb-3 d-block w-100" id="branch">
-							<option value="None">None</option>
-							# Options will be populated by Django 
-							{% if all_branches %}
-								{% for i in all_branches %}
-									<option value="{{ i }}">{{ i }}</option>
-								{% endfor %}
-							{% endif %}									
-						</select>
-					</div>
-				</div>-->
-
 				<div class="row">
 					<div class="col-12 mb-3">
 						<label for="medal">Medal</label>
-						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="medal" size="10"><!-- changed the id from student to medal -->
+						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="medal" size="10">
 						<!-- Options will be populated by Django --> 
-							{% if all_medals %}
-								{% for i in all_medals %}
-									<option value="{{ i }}">{{ i }}</option>
+							{% if all_medal_winners %}
+								{% for i in all_medal_winners %}
+									<option value="{{ i.id }}">{{ i.name }}</option>
 								{% endfor %}
 							{% endif %}									
 						</select>
 					</div>
 				</div>
-
-				<!-- <hr class="mb-4"> -->
 
 				<div class="row">
 					<div class="col-6 mb-3">
