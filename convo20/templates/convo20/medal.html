@@ -1,0 +1,59 @@
+<!-- 
+Important ID's
+  medal
+  play
+  stop
+ -->
+
+{% extends "base.html" %}
+
+{% block title %}IITG 20th Convocation{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var play_url   = "{% url 'convo20:play' %}";
+	var stop_url   = "{% url 'convo20:stop' %}";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="py-5 mt-5 text-center">
+		<h2>Caspar CG Controller</h2>
+	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<!-- <h4 class="mb-3">Please fill the info</h4> -->
+			<form>
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-12 mb-3">
+						<label for="medal">Medal</label>
+						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="medal" size="10">
+						<!-- Options will be populated by Django --> 
+							{% if all_medal_winners %}
+								{% for i in all_medal_winners %}
+									<option value="{{ i.id }}">{{ i.name }}</option>
+								{% endfor %}
+							{% endif %}									
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-6 mb-3">
+						<button class="btn btn-success btn-lg btn-block" type="button" id="play">Play</button>
+					</div>
+					<div class="col-6 mb-3">
+						<button class="btn btn-danger btn-lg btn-block disabled" type="button" id="stop">Stop</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+{% endblock %}

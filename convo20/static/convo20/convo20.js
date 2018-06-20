@@ -1,12 +1,9 @@
 var play;
 var stop;
+var select_element; 
 
-
-
-
-
+// Update students when programme or branch is inputted
 function update(){
-	// console.log( this.value );
 	data = {
 		'programme' : $("#programme").val(),
 		'branch'    : $("#branch").val(),
@@ -16,25 +13,24 @@ function update(){
 		$('#student').children('option').remove();
 		// Add all new names
 		for (i = 0; i < data.length; i++) {
-			to_append = '<option value="' + data[i] + '">' + data[i] + '</option>'
+			to_append = '<option value="' + data[i].id + '">' + data[i].name + '</option>'
 			$("#student").append(to_append);
 		}
 	}, "json");
 }
 
-
-
-
-
+// Moves select element to next item
+//	this is invoked in stop_handler
 function goto_next(){
-	var next = $('#student').find(':selected').next()
+	var next = select_element.find(':selected').next()
 	if(next.length==1)
 	{
-		$('#student').val(next.val());
+		select_element.val(next.val());
 	} 
 	else if(next.length==0)
 	{
-		alert("Last item reached!")
+		if(select_element.attr('id')=='student')
+			alert("Last item reached!")
 	}
 	else
 	{
@@ -42,51 +38,61 @@ function goto_next(){
 	}
 }
 
+function play_handler(){
+	if(!play.hasClass('disabled')){
+		data = {
+			'referer' : window.location.pathname,
+			'id' : select_element.val()
+		}
+		$.post( play_url, data, function(data, textStatus, jqXHR){
+			console.log(data)
+			play.addClass("disabled")
+			stop.removeClass("disabled")
+		});
+	}
+}
 
-
-
+function stop_handler(){
+	if(!stop.hasClass('disabled')){
+		$.post( stop_url, {}, function(data, textStatus, jqXHR){
+			console.log(data)
+			goto_next()
+			stop.addClass("disabled")
+			play.removeClass("disabled")
+		});
+	}
+}
 
 $(document).ready(function(){
-	// console.log("Hello")
-
+	// Init
 	play = $("#play");
 	stop = $("#stop");
+	switch(window.location.pathname) {
+		case "/convo20/VIP/":
+			select_element = $("#VIP")
+			break;		
+		case "/convo20/medal/":
+			select_element = $("#medal")
+			break;		
+		case "/convo20/student/":
+			select_element = $("#student")
+			break;
+		default:
+			console.log("Error - Switch case in default")
+			return {}
+	}
 
-	play.click(function(){
-		if(!play.hasClass('disabled')){
-			// console.log("Play Clicked")
-			data = {
-			'programme' : $("#programme").val(),
-			'branch'    : $("#branch").val(),
-			'student'   : $("#student").val()
-			}
-			$.post( play_url, data, function(data, textStatus, jqXHR){
-				console.log(data)
-				play.addClass("disabled")
-				stop.removeClass("disabled")
-			});
-		}
-	});
+	// Play button AJAX
+	play.click(play_handler);
 
-	stop.click(function(){
-		if(!stop.hasClass('disabled')){
-			// console.log("Stop Clicked")
-			$.post( stop_url, data, function(data, textStatus, jqXHR){
-				console.log(data)
-				goto_next()
-				stop.addClass("disabled")
-				play.removeClass("disabled")
-			});
-		}
-	});
+	// Stop button AJAX
+	stop.click(stop_handler);
 
-	$('#programme').on('input', update)
-	$('#branch').on('input', update) 
+	// Attach Handlers
+	$('#programme').on('input', update); // Update students on programme input
+	$('#branch').on('input', update); 	// Update students on branch input
 
-	$('#student').bind('keydown', 'p', function(){
-		play.click();
-	});	
-	$('#student').bind('keydown', 's', function(){
-		stop.click();
-	});	
+	// Register Hotkeys for Play and Stop buttons
+	select_element.bind('keydown', 'p', function(){play.click();});	
+	select_element.bind('keydown', 's', function(){stop.click();});	
 });
