@@ -8,10 +8,11 @@ Currently, for the 20th convocation, we are only implementing some rudimentary f
 In future, we will work to clean this up, and build an amazing Python API for CasparCG.
 '''
 class CasparServer:
-	def __init__(self, ip, port):
+	def __init__(self, ip, port, timeout=3):
 		self.ip = ip
 		self.port = port
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.socket.settimeout(timeout)
 		self.socket.connect((self.ip,self.port))
 
 	def send(self,command): 

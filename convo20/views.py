@@ -1,3 +1,4 @@
+import socket
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -5,24 +6,53 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from convo20.models import Student, VIP, Medal
 from convo20.scripts import caspar
-# from django.contrib.auth.models import User
-# from django.contrib.auth import get_user_model, authenticate, login, logout
-# from django.contrib import messages
-# import datetime
-# from django.db import IntegrityError
+
+
+
+def setup_caspar():
+	# If it does not exist, setup Caspar CG Server
+	ip = '172.16.101.107'
+	port = 5250
+	global cs
+	try:
+		if cs is None:
+			print("\n\tcs is None\n")
+			cs = caspar.CasparServer(ip,port)
+		else:
+			print("\n\tcs was Fine\n")
+	except socket.timeout:
+					pass # Send error message
+	except socket.error:
+					pass # Send error message			
+	except NameError:
+			print("\n\tcs raised NameError\n")
+			try:
+				cs = caspar.CasparServer(ip,port)
+			except socket.timeout:
+					pass # Send error message
+			except socket.error:
+					pass # Send error message
+	# Clear all running CG
+	try:
+		cs.cgstop()	
+	except:
+		pass
 
 # Create your views here.
 
 # Renders main page
 class IndexView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
+		# Setup CasparCG
+		setup_caspar()
+		# Render the main page
 		return render(request, 'convo20/index.html')
 
-# Renders the Student frontend page
+# Renders the Student page
 class StudentView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)
+		# Setup CasparCG
+		setup_caspar()
 		# Render the Student page
 		temp = list(Student.objects.all())
 		all_programmes  = set()
@@ -36,11 +66,11 @@ class StudentView(LoginRequiredMixin, View):
 		}
 		return render(request, 'convo20/student.html', context)
 
-# Renders the VIP frontend page
+# Renders the VIP page
 class VIP_View(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)
+		# Setup CasparCG
+		setup_caspar()
 		# Render the VIP page
 		all_VIPs = list(VIP.objects.all())
 		all_VIPs = [ {'name':i.name,'id':i.id} for i in all_VIPs ]
@@ -49,11 +79,11 @@ class VIP_View(LoginRequiredMixin, View):
 		}
 		return render(request, 'convo20/VIP.html', context)
 
-# Renders the medal frontend page
+# Renders the Medal page
 class MedalView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
-		global cs
-		cs = caspar.CasparServer('172.16.101.107', 5250)		
+		# Setup CasparCG
+		setup_caspar()
 		# Render the index page
 		all_medal_winners = list(Medal.objects.all())
 		all_medal_winners = [ {'name':i.name,'id':i.id} for i in all_medal_winners ]
@@ -65,8 +95,9 @@ class MedalView(LoginRequiredMixin, View):
 # Update's list of students based on programme and branch
 class UpdateView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
+		# Get POST data
 		programme 	= request.POST.get('programme')
-		branch 		= request.POST.get('branch')
+		branch 	= request.POST.get('branch')
 		temp = list(Student.objects.filter(programme=programme, branch=branch))
 		temp = [ {'name':i.name,'id':i.id} for i in temp ]
 		return JsonResponse(temp,safe=False)
@@ -74,9 +105,10 @@ class UpdateView(LoginRequiredMixin, View):
 # Plays Caspar CG Animation
 class PlayView(LoginRequiredMixin, View):
 	def post(self, request, *args, **kwargs):
+		# Get POST data
 		pk = request.POST.get('id')
 		referer = request.POST.get('referer')
-
+		# Get the instance from DB
 		if referer == reverse('convo20:VIP'):
 			instance = VIP.objects.get(pk=pk)
 			name = instance.name
@@ -91,7 +123,6 @@ class PlayView(LoginRequiredMixin, View):
 			degree = instance.programme + " " + instance.branch
 		else:
 			return HttpResponse("From PlayView : Bad Referer")
-
 		# Play the CG
 		template_name = '20Convo/20CONVO'
 		data = {'Sym1_Name':name, 'Sym1_Degree':degree}
