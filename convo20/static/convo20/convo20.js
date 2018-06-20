@@ -83,10 +83,10 @@ $(document).ready(function(){
 	$('#programme').on('input', update)
 	$('#branch').on('input', update) 
 
-	$(document).bind('keydown', 'ctrl+[', function(){
+	$('#student').bind('keydown', 'p', function(){
 		play.click();
 	});	
-	$(document).bind('keydown', 'ctrl+]', function(){
+	$('#student').bind('keydown', 's', function(){
 		stop.click();
 	});	
 });
