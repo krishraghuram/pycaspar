@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin, ExportMixin
-from .resources import StudentResource, VIP_Resource, MedalResource
-from .models import Student, VIP, Medal
+from .resources import StudentResource, DignitaryResource, MedalResource
+from .models import Student, Dignitary, Medal
 
 
 # Register your models here.
@@ -20,8 +20,8 @@ class StudentAdmin(ImportExportModelAdmin):
 			return []
 
 
-class VIP_Admin(ImportExportModelAdmin):
-	resource_class = VIP_Resource
+class DignitaryAdmin(ImportExportModelAdmin):
+	resource_class = DignitaryResource
 	fields = ('orderno','name', 'designation',)
 	list_display = ('name', 'designation')
 
@@ -48,5 +48,5 @@ class MedalAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(Student, StudentAdmin)
-admin.site.register(VIP, VIP_Admin)
+admin.site.register(Dignitary, DignitaryAdmin)
 admin.site.register(Medal, MedalAdmin)

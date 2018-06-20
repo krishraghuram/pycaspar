@@ -21,14 +21,14 @@ class Student(models.Model):
 	pretty_name.short_description = "Name"
 
 
-class VIP(models.Model):
+class Dignitary(models.Model):
 	orderno     = models.IntegerField(unique=True)
 	name        = models.CharField(max_length=100)
 	designation = models.CharField(max_length=100)
 	
 	class Meta:
-		verbose_name="VIP"
-		verbose_name_plural="VIPs"
+		verbose_name="Dignitary"
+		verbose_name_plural="Dignitaries"
 
 
 class Medal(models.Model):

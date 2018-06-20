@@ -1,5 +1,5 @@
 from import_export import resources, fields
-from .models import Student, VIP, Medal
+from .models import Student, Dignitary, Medal
 
 class StudentResource(resources.ModelResource):
 	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number') #Ensure rollno cannot be imported
@@ -16,13 +16,13 @@ class StudentResource(resources.ModelResource):
 		import_id_fields = ('rollno',) #Use rollno as primary key while importing
 
 
-class VIP_Resource(resources.ModelResource):
+class DignitaryResource(resources.ModelResource):
 	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number') #Ensure rollno cannot be imported
 	name 				= fields.Field(attribute = 'name', column_name = 'Name')
 	designation 		= fields.Field(attribute = 'designation', column_name = 'Designation')
 
 	class Meta:
-		model = VIP
+		model = Dignitary
 		skip_unchanged = True #Dont import unchanged fields
 		fields = ('orderno', 'name', 'designation',) #Whitelist fields to be import/exported
 		export_order = ('orderno', 'name', 'designation',) #Needed because we are using column_name(s)

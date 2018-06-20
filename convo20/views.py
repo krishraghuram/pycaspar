@@ -4,7 +4,7 @@ from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from convo20.models import Student, VIP, Medal
+from convo20.models import Student, Dignitary, Medal
 from convo20.scripts import caspar
 
 
@@ -66,18 +66,18 @@ class StudentView(LoginRequiredMixin, View):
 		}
 		return render(request, 'convo20/student.html', context)
 
-# Renders the VIP page
-class VIP_View(LoginRequiredMixin, View):
+# Renders the Dignitary page
+class DignitaryView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		# Setup CasparCG
 		setup_caspar()
-		# Render the VIP page
-		all_VIPs = list(VIP.objects.all())
-		all_VIPs = [ {'name':i.name,'id':i.id} for i in all_VIPs ]
+		# Render the Dignitary page
+		all_dignitaries = list(Dignitary.objects.all())
+		all_dignitaries = [ {'name':i.name,'id':i.id} for i in all_dignitaries ]
 		context = {
-			'all_VIPs' : all_VIPs,
+			'all_dignitaries' : all_dignitaries,
 		}
-		return render(request, 'convo20/VIP.html', context)
+		return render(request, 'convo20/dignitary.html', context)
 
 # Renders the Medal page
 class MedalView(LoginRequiredMixin, View):
@@ -109,8 +109,8 @@ class PlayView(LoginRequiredMixin, View):
 		pk = request.POST.get('id')
 		referer = request.POST.get('referer')
 		# Get the instance from DB
-		if referer == reverse('convo20:VIP'):
-			instance = VIP.objects.get(pk=pk)
+		if referer == reverse('convo20:dignitary'):
+			instance = Dignitary.objects.get(pk=pk)
 			name = instance.name
 			degree = instance.designation
 		elif referer == reverse('convo20:medal'):

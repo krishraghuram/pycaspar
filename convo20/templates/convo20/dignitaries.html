@@ -1,6 +1,6 @@
 <!-- 
 Important ID's
-  VIP
+  dignitary
   play
   stop
  -->
@@ -31,11 +31,11 @@ Important ID's
 				{% csrf_token %}
 				<div class="row">
 					<div class="col-12 mb-3">
-						<label for="VIP">V.I.P</label>
-						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="VIP" size="10">
+						<label for="dignitary">V.I.P</label>
+						<select class="custom-select custom-select-lg mb-3 d-block w-100" id="dignitary" size="10">
 						<!-- Options will be populated by Django --> 
-							{% if all_VIPs %}
-								{% for i in all_VIPs %}
+							{% if all_dignitaries %}
+								{% for i in all_dignitaries %}
 									<option value="{{ i.id }}">{{ i.name }}</option>
 								{% endfor %}
 							{% endif %}	

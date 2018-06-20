@@ -68,8 +68,8 @@ $(document).ready(function(){
 	play = $("#play");
 	stop = $("#stop");
 	switch(window.location.pathname) {
-		case "/convo20/VIP/":
-			select_element = $("#VIP")
+		case "/convo20/dignitary/":
+			select_element = $("#dignitary")
 			break;		
 		case "/convo20/medal/":
 			select_element = $("#medal")
