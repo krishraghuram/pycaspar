@@ -30,13 +30,6 @@ class VIP(models.Model):
 		verbose_name="VIP"
 		verbose_name_plural="VIPs"
 
-	def pretty_name(self):
-		if self.name=="" or self.name is None:
-			return self.designation
-		else: 
-			return self.name
-	pretty_name.short_description = "Name"
-
 
 class Medal(models.Model):
 	orderno   = models.IntegerField(unique=True)
@@ -50,9 +43,3 @@ class Medal(models.Model):
 		verbose_name="Medal Winner"
 		verbose_name_plural="Medal Winners"
 
-	def pretty_name(self):
-		if self.name=="" or self.name is None:
-			return self.medal
-		else: 
-			return self.name
-	pretty_name.short_description = "Name"

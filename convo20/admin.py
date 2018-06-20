@@ -23,7 +23,7 @@ class StudentAdmin(ImportExportModelAdmin):
 class VIP_Admin(ImportExportModelAdmin):
 	resource_class = VIP_Resource
 	fields = ('orderno','name', 'designation',)
-	list_display = ('pretty_name', 'designation')
+	list_display = ('name', 'designation')
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):
@@ -36,7 +36,7 @@ class VIP_Admin(ImportExportModelAdmin):
 class MedalAdmin(ImportExportModelAdmin):
 	resource_class = MedalResource
 	fields = ('orderno','rollno', 'name',  'medal', 'programme', 'branch')
-	list_display = ('pretty_name','rollno')
+	list_display = ('name','rollno')
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):
