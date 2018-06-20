@@ -1,4 +1,5 @@
 import socket
+import threading
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -16,16 +17,14 @@ def setup_caspar():
 	global cs
 	try:
 		if cs is None:
-			print("\n\tcs is None\n")
 			cs = caspar.CasparServer(ip,port)
 		else:
-			print("\n\tcs was Fine\n")
+			pass
 	except socket.timeout:
 					pass # Send error message
 	except socket.error:
 					pass # Send error message			
 	except NameError:
-			print("\n\tcs raised NameError\n")
 			try:
 				cs = caspar.CasparServer(ip,port)
 			except socket.timeout:
@@ -34,7 +33,8 @@ def setup_caspar():
 					pass # Send error message
 	# Clear all running CG
 	try:
-		cs.cgstop()	
+		t = threading.Thread(target=cs.cgstop)
+		t.start()
 	except:
 		pass
 
