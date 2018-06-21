@@ -10,7 +10,7 @@ from .models import Student, Dignitary, Medal
 class StudentAdmin(ImportExportModelAdmin):
 	resource_class = StudentResource
 	fields = ('orderno','rollno', 'name', 'programme', 'branch')
-	list_display = ('pretty_name','rollno')
+	list_display = ('orderno','rollno', 'pretty_name', 'programme', 'branch')
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):
@@ -22,8 +22,8 @@ class StudentAdmin(ImportExportModelAdmin):
 
 class DignitaryAdmin(ImportExportModelAdmin):
 	resource_class = DignitaryResource
-	fields = ('orderno','name', 'designation',)
-	list_display = ('name', 'designation')
+	fields = ('orderno','name','designation')
+	list_display = ('orderno','name','designation')
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):
@@ -36,7 +36,8 @@ class DignitaryAdmin(ImportExportModelAdmin):
 class MedalAdmin(ImportExportModelAdmin):
 	resource_class = MedalResource
 	fields = ('orderno','rollno', 'name',  'medal', 'programme', 'branch')
-	list_display = ('name','rollno')
+	list_display = ('orderno','rollno', 'pretty_name',  'medal', 'programme', 'branch')
+
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):

@@ -43,3 +43,9 @@ class Medal(models.Model):
 		verbose_name="Medal Winner"
 		verbose_name_plural="Medal Winners"
 
+	def pretty_name(self):
+		if self.name=="" or self.name is None:
+			return self.rollno
+		else: 
+			return self.name
+	pretty_name.short_description = "Name"
