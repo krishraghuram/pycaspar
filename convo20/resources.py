@@ -2,8 +2,8 @@ from import_export import resources, fields
 from .models import Student, Dignitary, Medal
 
 class StudentResource(resources.ModelResource):
-	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number') #Ensure rollno cannot be imported
-	rollno 				= fields.Field(attribute = 'rollno', column_name = 'Roll Number') #Ensure rollno cannot be imported
+	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number')
+	rollno 				= fields.Field(attribute = 'rollno', column_name = 'Roll Number')
 	name 				= fields.Field(attribute = 'name', column_name = 'Name')
 	programme 			= fields.Field(attribute = 'programme', column_name = 'Programme')
 	branch 				= fields.Field(attribute = 'branch', column_name = 'Branch')
@@ -17,7 +17,7 @@ class StudentResource(resources.ModelResource):
 
 
 class DignitaryResource(resources.ModelResource):
-	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number') #Ensure rollno cannot be imported
+	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number')
 	name 				= fields.Field(attribute = 'name', column_name = 'Name')
 	designation 		= fields.Field(attribute = 'designation', column_name = 'Designation')
 
@@ -30,8 +30,8 @@ class DignitaryResource(resources.ModelResource):
 
 
 class MedalResource(resources.ModelResource):
-	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number') #Ensure rollno cannot be imported
-	rollno 				= fields.Field(attribute = 'rollno', column_name = 'Roll Number') #Ensure rollno cannot be imported
+	orderno 			= fields.Field(attribute = 'orderno', column_name = 'Order Number')
+	rollno 				= fields.Field(attribute = 'rollno', column_name = 'Roll Number')
 	name 				= fields.Field(attribute = 'name', column_name = 'Name')
 	medal 				= fields.Field(attribute = 'medal', column_name = 'Medal')
 	programme 			= fields.Field(attribute = 'programme', column_name = 'Programme')
