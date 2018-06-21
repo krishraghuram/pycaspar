@@ -25,19 +25,11 @@ class DignitaryAdmin(ImportExportModelAdmin):
 	fields = ('orderno','name','designation')
 	list_display = ('orderno','name','designation')
 
-	#Make rollno readonly on update, but writable during creation
-	def get_readonly_fields(self, request, obj=None):
-		if obj: #This is the case when obj is already created i.e. it's an edit
-			return ['orderno']
-		else:
-			return []
-
 
 class MedalAdmin(ImportExportModelAdmin):
 	resource_class = MedalResource
 	fields = ('orderno','rollno', 'name',  'medal', 'programme', 'branch')
 	list_display = ('orderno','rollno', 'pretty_name',  'medal', 'programme', 'branch')
-
 
 	#Make rollno readonly on update, but writable during creation
 	def get_readonly_fields(self, request, obj=None):
