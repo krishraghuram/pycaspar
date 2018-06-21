@@ -72,7 +72,7 @@ class DignitaryView(LoginRequiredMixin, View):
 		# Setup CasparCG
 		setup_caspar()
 		# Render the Dignitary page
-		all_dignitaries = list(Dignitary.objects.all())
+		all_dignitaries = list(Dignitary.objects.all().order_by('orderno'))
 		all_dignitaries = [ {'name':i.name,'id':i.id} for i in all_dignitaries ]
 		context = {
 			'all_dignitaries' : all_dignitaries,
@@ -85,7 +85,7 @@ class MedalView(LoginRequiredMixin, View):
 		# Setup CasparCG
 		setup_caspar()
 		# Render the index page
-		all_medal_winners = list(Medal.objects.all())
+		all_medal_winners = list(Medal.objects.all().order_by('orderno'))
 		all_medal_winners = [ {'name':i.name,'id':i.id} for i in all_medal_winners ]
 		context = {
 			'all_medal_winners' : all_medal_winners,
@@ -98,7 +98,7 @@ class UpdateView(LoginRequiredMixin, View):
 		# Get POST data
 		programme 	= request.POST.get('programme')
 		branch 	= request.POST.get('branch')
-		temp = list(Student.objects.filter(programme=programme, branch=branch))
+		temp = list(Student.objects.filter(programme=programme, branch=branch).order_by('orderno'))
 		temp = [ {'name':i.name,'id':i.id} for i in temp ]
 		return JsonResponse(temp,safe=False)
 
