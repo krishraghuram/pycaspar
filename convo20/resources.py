@@ -26,7 +26,7 @@ class DignitaryResource(resources.ModelResource):
 		skip_unchanged = True #Dont import unchanged fields
 		fields = ('orderno', 'name', 'designation',) #Whitelist fields to be import/exported
 		export_order = ('orderno', 'name', 'designation',) #Needed because we are using column_name(s)
-		import_id_fields = ('orderno',) #Use rollno as primary key while importing
+		import_id_fields = ('name',) 
 
 
 class MedalResource(resources.ModelResource):
@@ -38,7 +38,7 @@ class MedalResource(resources.ModelResource):
 	branch 				= fields.Field(attribute = 'branch', column_name = 'Branch')
 
 	class Meta:
-		model = Student
+		model = Medal
 		skip_unchanged = True #Dont import unchanged fields
 		fields = ('orderno','rollno', 'name', 'medal', 'programme', 'branch') #Whitelist fields to be import/exported
 		export_order = ('orderno','rollno', 'name', 'medal', 'programme', 'branch') #Needed because we are using column_name(s)
