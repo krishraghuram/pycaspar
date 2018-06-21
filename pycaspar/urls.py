@@ -17,14 +17,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from .views import redirect
 
 urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^admin/', admin.site.urls),
-    # url(r'^convo20/', include('convo20.urls', namespace='convo20')),
-    # The above way is the old method, and was changed in django 2.0
-    # https://github.com/encode/django-rest-framework/issues/5659#issuecomment-366948260
     url(r'^convo20/', include(('convo20.urls', 'convo20'))),
+    url(r'^$', redirect, {'url_name' : 'convo20:index'}, name='redirect'),
 ]
-
