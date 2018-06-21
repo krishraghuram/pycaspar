@@ -18,6 +18,11 @@ Important ID's
 	var play_url   = "{% url 'convo20:play' %}";
 	var stop_url   = "{% url 'convo20:stop' %}";
 	var update_url = "{% url 'convo20:update' %}";
+
+	// Call update once, when the page first loads
+	$(document).ready(function(){
+		update();
+	});
 </script>
 <!---<script src="static/convo20/convo20_student.js"></script>--->
 {% endblock %}
@@ -37,7 +42,7 @@ Important ID's
 					<div class="col-3 mb-3">
 						<label for="programme">Programme</label>
 						<select class="custom-select mb-3 d-block w-100" id="programme">
-							<option value="None">None</option>
+							<option value="Any">Any</option>
 							<!-- Options will be populated by Django -->
 							{% if all_programmes %}
 								{% for i in all_programmes %}
@@ -49,7 +54,7 @@ Important ID's
 					<div class="col-3 mb-3">
 						<label for="branch">Branch</label>
 						<select class="custom-select mb-3 d-block w-100" id="branch">
-							<option value="None">None</option>
+							<option value="Any">Any</option>
 							<!-- Options will be populated by Django -->
 							{% if all_branches %}
 								{% for i in all_branches %}

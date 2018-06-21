@@ -98,7 +98,17 @@ class UpdateView(LoginRequiredMixin, View):
 		# Get POST data
 		programme 	= request.POST.get('programme')
 		branch 	= request.POST.get('branch')
-		temp = list(Student.objects.filter(programme=programme, branch=branch).order_by('orderno'))
+		# Make the database query
+		temp = Student.objects.all()
+		if programme=="Any":
+			temp = temp.all()
+		else:
+			temp = temp.filter(programme=programme)
+		if branch=="Any":
+			temp = temp.all()
+		else:
+			temp = temp.filter(branch=branch)
+		temp = list(temp.order_by('orderno'))
 		temp = [ {'name':i.name,'id':i.id} for i in temp ]
 		return JsonResponse(temp,safe=False)
 
