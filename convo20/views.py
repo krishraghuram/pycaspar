@@ -33,7 +33,7 @@ def setup_caspar():
 					pass # Send error message
 	# Clear all running CG
 	try:
-		t = threading.Thread(target=cs.cgstop)
+		t = threading.Thread(target=cs.cgclear)
 		t.start()
 	except:
 		pass

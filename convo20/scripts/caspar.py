@@ -71,7 +71,7 @@ class CasparServer:
 		return(cg_add_cmd,response)
 
 	'''
-	Stop's the current animation. 
+	Stops the current animation. 
 	This is different from remove,
 		in that it gives a chance for animation to play 'outro' before being removed
 	'''
@@ -83,6 +83,13 @@ class CasparServer:
 		
 		return(cg_stop_cmd,response)
 			
+	'''
+	Clears the video channel
+	'''
+	def cgclear(self):
+		cg_clear_cmd = 'CLEAR 1\r\n'
 
-
-
+		self.send(cg_clear_cmd.encode('utf-8'))
+		response = self.read()
+		
+		return(cg_clear_cmd,response)
