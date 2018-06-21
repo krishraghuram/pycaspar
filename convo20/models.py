@@ -6,8 +6,8 @@ class Student(models.Model):
 	orderno   = models.IntegerField(unique=True)
 	rollno    = models.IntegerField(unique=True)
 	name      = models.CharField(max_length=100)
-	programme = models.CharField(max_length=50)
-	branch    = models.CharField(max_length=50)
+	programme = models.CharField(max_length=50, blank=True)
+	branch    = models.CharField(max_length=50, blank=True)
 
 	class Meta:
 		verbose_name        = "Student"
@@ -36,8 +36,8 @@ class Medal(models.Model):
 	rollno    = models.IntegerField(unique=True)
 	medal     = models.CharField(max_length=100)
 	name      = models.CharField(max_length=100)
-	programme = models.CharField(max_length=50)
-	branch    = models.CharField(max_length=50)
+	programme = models.CharField(max_length=50, blank=True)
+	branch    = models.CharField(max_length=50, blank=True)
 
 	class Meta:
 		verbose_name="Medal Winner"
