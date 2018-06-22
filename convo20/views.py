@@ -123,19 +123,24 @@ class PlayView(LoginRequiredMixin, View):
 			instance = Dignitary.objects.get(pk=pk)
 			name = instance.name
 			degree = instance.designation
+			template_name = '20Convo/gold/gold_20convo'
 		elif referer == reverse('convo20:medal'):
 			instance = Medal.objects.get(pk=pk)
 			name = instance.name
 			degree = instance.medal
+			if degree.startswith('silver') or degree.startswith('Silver'):
+				template_name = '20Convo/silver/silver_20convo'
+			else:
+				template_name = '20Convo/gold/gold_20convo'
 		elif referer == reverse('convo20:student'):
 			instance = Student.objects.get(pk=pk)
 			name = instance.name
 			degree = instance.programme + " " + instance.branch
+			template_name = '20Convo/general/general_20convo'
 		else:
 			return HttpResponse("From PlayView : Bad Referer")
 		# Play the CG
-		template_name = '20Convo/20CONVO'
-		data = {'Sym1_Name':name, 'Sym1_Degree':degree}
+		data = {'Sym1_primary_text':name, 'Sym1_secondary_text':degree}
 		(req,res) = cs.cgplay(template_name,data)
 		return HttpResponse(str(req) + "\n\n\n" + str(res))
 
