@@ -63,6 +63,16 @@ function stop_handler(){
 	}
 }
 
+function click_active_button(){
+	console.log("Im here")
+	if(play.hasClass('disabled')){
+		stop.click();
+	}
+	else if(stop.hasClass('disabled')){
+		play.click();
+	}
+}
+
 $(document).ready(function(){
 	// Init
 	play = $("#play");
@@ -93,6 +103,5 @@ $(document).ready(function(){
 	$('#branch').on('input', update); 	// Update students on branch input
 
 	// Register Hotkeys for Play and Stop buttons
-	select_element.bind('keydown', 'p', function(){play.click();});	
-	select_element.bind('keydown', 's', function(){stop.click();});	
+	select_element.bind('keydown', 'space', click_active_button);
 });
